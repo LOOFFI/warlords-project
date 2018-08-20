@@ -8,8 +8,8 @@ var dx = 5;
 var dy = -5;
 var brickWidth = 70;
 var brickHeight = 30;
-var brickRowCount = 5;
-var brickColumnCount = 15;
+var brickRowCount = 21;
+var brickColumnCount = 17;
 
 
 var bricks = [];
@@ -24,7 +24,7 @@ for(var c=0; c<brickColumnCount; c++) {
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "pink";
     ctx.fill();
     ctx.closePath();
 }
@@ -32,10 +32,8 @@ function drawBall() {
 
 function drawBricks() {
 
-  //var brickX = 0;
-  //var brickY = 580;
-  for(var c=0; c<brickColumnCount; c++) {
-    for(var r=0; r<brickRowCount; r++) {
+  for(var c=0; c<6 ; c++) {
+    for(var r=0; r<5; r++) {
       if(bricks[c][r].status == 1) {
         var brickX = c*brickWidth;
         var brickY = r*brickHeight;
@@ -53,8 +51,8 @@ function drawBricks() {
 
 function drawBricks2() {
 
-  for(var c=10; c<brickColumnCount; c++) {
-    for(var r=2; r<brickRowCount; r++) {
+  for(var c=11; c<brickColumnCount; c++) {
+    for(var r=0; r<5; r++) {
       if(bricks[c][r].status == 1) {
         var brickX = c*brickWidth;
         var brickY = r*brickHeight;
@@ -70,6 +68,43 @@ function drawBricks2() {
   }
 }
 
+function drawBricks3() {
+
+  for(var c=0; c<6; c++) {
+    for(var r=16; r<brickRowCount; r++) {
+      if(bricks[c][r].status == 1) {
+        var brickX = c*brickWidth;
+        var brickY = r*brickHeight;
+        bricks[c][r].x = brickX;
+        bricks[c][r].y = brickY;
+        ctx.beginPath();
+        ctx.rect(brickX, brickY, brickWidth, brickHeight);
+        ctx.fillStyle = "yellow";
+        ctx.fill();
+        ctx.closePath();
+      }
+    }
+  }
+}
+
+function drawBricks4() {
+
+  for(var c=11; c<brickColumnCount; c++) {
+    for(var r=16; r<brickRowCount; r++) {
+      if(bricks[c][r].status == 1) {
+        var brickX = c*brickWidth;
+        var brickY = r*brickHeight;
+        bricks[c][r].x = brickX;
+        bricks[c][r].y = brickY;
+        ctx.beginPath();
+        ctx.rect(brickX, brickY, brickWidth, brickHeight);
+        ctx.fillStyle = "green";
+        ctx.fill();
+        ctx.closePath();
+      }
+    }
+  }
+}
 
 function collisionDetection() {
   for(var c=0; c<brickColumnCount; c++) {
@@ -91,6 +126,8 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks();
     drawBricks2();
+    drawBricks3();
+    drawBricks4();
     drawBall();
     collisionDetection();
 
