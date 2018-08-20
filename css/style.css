@@ -1,3 +1,12 @@
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+
+
 canvas {
-  border: 2px solid deeppink;
+  top: 10px;
+	border: 2px solid deeppink;
 }
