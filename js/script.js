@@ -1,19 +1,18 @@
 
 var canvas = document.querySelector(".warlords-canvas");
 var ctx = canvas.getContext("2d");
-var x = canvas.width-(Math.random()*canvas.width);
-var y = canvas.height-30;
+var x = canvas.width-840;
+var y = canvas.height-160;
 var ballRadius = 5;
-var dx = 5;
+var dx = 6;
 var dy = -5;
 var brickWidth = 70;
 var brickHeight = 30;
 var brickRowCount = 21;
 var brickColumnCount = 17;
-// var lordWidth = 140;
-// var lordHeight = 90;
-// var lordX = 0;
-// var lordY = 0;
+var knightWidth = 40;
+var knightHeight = 30;
+
 
 
 var bricks = [];
@@ -23,6 +22,31 @@ for(var c=0; c<brickColumnCount; c++) {
         bricks[c][r] = { x: 0, y: 0, status: 1};
     }
 }
+
+var knight = {
+  x:300,
+  y:400
+};
+
+
+// var ball = {
+//  x : canvas.width-840,
+//  y : canvas.height-160,
+//  ballRadius : 5,
+//  dx: 5,
+//  dy: -5,
+//  drawBall: function() {
+//   ctx.beginPath();
+//   ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI*2);
+//   ctx.fillStyle = "pink";
+//   ctx.fill();
+//   ctx.closePath();
+//  
+// }
+//
+//
+//}
+
 
 function lord(lordX, lordY, lordWidth, lordHeight) {
   this.x = lordX;
@@ -42,6 +66,8 @@ lord.prototype.draw = function () {
 
   ctx.fillRect(this.x, this.y, this.width, this.height);
 };
+
+
 
 var lord1 = new lord(0,0,140,90);
 var lord2 = new lord(1050,0,140,90);
@@ -136,6 +162,7 @@ function drawBricks4() {
 }
 
 function collisionDetection() {
+
   for(var c=0; c<brickColumnCount; c++) {
     for(var r=0; r<brickRowCount; r++) {
       var b = bricks[c][r];
@@ -149,15 +176,21 @@ function collisionDetection() {
   }
 }
 
-// function drawLord() {
-        // ctx.beginPath();
-        // ctx.rect(lordX, lordY, lordWidth, lordHeight);
-        // ctx.fillStyle = "pink";
-        // ctx.fill();
-        // ctx.closePath();
+function drawKnight() {
+        ctx.beginPath();
+        ctx.rect(knight.x, knight.y, knightWidth, knightHeight);
+        ctx.fillStyle = "#04F2BC";
+        ctx.fill();
+        ctx.closePath();
+}
+
+
+// function collisionLord(ball,lord) {
+  // return ball.y + ball.height >= lord.y
+      // && ball.y <= lord.y + lord.height
+      // && ball.x + ball.width >= lord.x
+      // && ball.x <= lord.x + lord.width
 // }
-
-
 
 
 function draw() {
@@ -170,9 +203,11 @@ function draw() {
     lord2.draw();
     lord3.draw();
     lord4.draw();
+    drawKnight();
     drawBall();
+    // ball.drawBall();
     collisionDetection();
-
+ 
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
       dx = -dx;
     }
@@ -181,6 +216,8 @@ function draw() {
     }
     x += dx;
     y += dy;
+
+    
 }
 
 
