@@ -12,7 +12,8 @@ var brickRowCount = 21;
 var brickColumnCount = 17;
 var knightWidth = 40;
 var knightHeight = 30;
-
+var rightPressed = false;
+var leftPressed = false;
 
 
 var bricks = [];
@@ -28,6 +29,8 @@ var knight = {
   y:400
 };
 
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
 
 // var ball = {
 //  x : canvas.width-840,
@@ -184,6 +187,22 @@ function drawKnight() {
         ctx.closePath();
 }
 
+function keyDownHandler(e) {
+  if(e.keyCode == 39) {
+      rightPressed = true;
+  }
+  else if(e.keyCode == 37) {
+      leftPressed = true;
+  }
+}
+function keyUpHandler(e) {
+  if(e.keyCode == 39) {
+      rightPressed = false;
+  }
+  else if(e.keyCode == 37) {
+      leftPressed = false;
+  }
+}
 
 // function collisionLord(ball,lord) {
   // return ball.y + ball.height >= lord.y
@@ -214,6 +233,14 @@ function draw() {
     if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
       dy = -dy;
     }
+    if(rightPressed && knight.x < canvas.width/2-knightWidth-60) {
+      knight.x += 7;
+    }
+    else if(leftPressed && knight.x > 0) {
+      knight.x -= 7;
+    }
+
+
     x += dx;
     y += dy;
 
