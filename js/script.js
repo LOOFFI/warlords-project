@@ -10,6 +10,10 @@ var brickWidth = 70;
 var brickHeight = 30;
 var brickRowCount = 21;
 var brickColumnCount = 17;
+// var lordWidth = 140;
+// var lordHeight = 90;
+// var lordX = 0;
+// var lordY = 0;
 
 
 var bricks = [];
@@ -19,6 +23,31 @@ for(var c=0; c<brickColumnCount; c++) {
         bricks[c][r] = { x: 0, y: 0, status: 1};
     }
 }
+
+function lord(lordX, lordY, lordWidth, lordHeight) {
+  this.x = lordX;
+  this.y = lordY;
+  this.width = lordWidth;
+  this.height = lordHeight;
+  this.isCrashed = false;
+}
+
+lord.prototype.draw = function () {
+  if (this.isCrashed) {
+    ctx.fillStyle = "crimson";
+  }
+  else {
+    ctx.fillStyle = "#7404f2";
+  }
+
+  ctx.fillRect(this.x, this.y, this.width, this.height);
+};
+
+var lord1 = new lord(0,0,140,90);
+var lord2 = new lord(1050,0,140,90);
+var lord3 = new lord(0,540,140,90);
+var lord4 = new lord(1050,540,140,90);
+
 
 
 function drawBall() {
@@ -60,7 +89,7 @@ function drawBricks2() {
         bricks[c][r].y = brickY;
         ctx.beginPath();
         ctx.rect(brickX, brickY, brickWidth, brickHeight);
-        ctx.fillStyle = "blue";
+        ctx.fillStyle = "#04F2BC";
         ctx.fill();
         ctx.closePath();
       }
@@ -120,6 +149,15 @@ function collisionDetection() {
   }
 }
 
+// function drawLord() {
+        // ctx.beginPath();
+        // ctx.rect(lordX, lordY, lordWidth, lordHeight);
+        // ctx.fillStyle = "pink";
+        // ctx.fill();
+        // ctx.closePath();
+// }
+
+
 
 
 function draw() {
@@ -128,6 +166,10 @@ function draw() {
     drawBricks2();
     drawBricks3();
     drawBricks4();
+    lord1.draw();
+    lord2.draw();
+    lord3.draw();
+    lord4.draw();
     drawBall();
     collisionDetection();
 
