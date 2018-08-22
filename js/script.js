@@ -10,7 +10,7 @@ var brickWidth = 70;
 var brickHeight = 30;
 var brickRowCount = 21;
 var brickColumnCount = 17;
-var knightWidth = 40;
+var knightWidth = 80;
 var knightHeight = 30;
 var rightPressed = false;
 var leftPressed = false;
@@ -18,6 +18,7 @@ var upPressed = false;
 var downPressed = false;
 var score = 0;
 var scoreEnemy = 0;
+var barPressed = false;
 
 var bricks = [];
 for(var c=0; c<brickColumnCount; c++) {
@@ -32,8 +33,25 @@ var knight = {
   y:400
 };
 
+var knightEn1 = {
+  x:300,
+  y:200
+};
+
+var knightEn2 = {
+  x:850,
+  y:200
+};
+
+var knightEn3 = {
+  x:850,
+  y:400
+}
+
+
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+//document.addEventListener("keyup", keyStart, false);
 
 // var ball = {
 //  x : canvas.width-840,
@@ -199,6 +217,11 @@ function keyUpHandler(e) {
 
 }
 
+// function keyStart(e) {
+  // if (e.keyCode == 32){
+    // barPressed = true;
+  // }
+// }
 
 function collisionDetection() {
 
@@ -218,20 +241,20 @@ function collisionDetection() {
 
 function collisionDetectionLord() {
   if (x > lord1.x && x < lord1.x+lord1.width && y > lord1.y && y < lord1.y+lord1.height) {
-    dy = -dy
-    console.log("coucou");
+    lord1.isCrashed = true;
+    score++;
   }
   else if (x > lord2.x && x < lord2.x+lord2.width && y > lord2.y && y < lord2.y+lord2.height) {
-    dy = -dy
-    console.log("coucou");
+    lord2.isCrashed = true;
+    score++;
   }
   else if (x > lord3.x && x < lord3.x+lord3.width && y > lord3.y && y < lord3.y+lord3.height) {
-    dy = -dy
-    console.log("coucou");
+    lord3.isCrashed = true;
+    scoreEnemy++;
   }
   else if (x > lord4.x && x < lord4.x+lord4.width && y > lord4.y && y < lord4.y+lord4.height) {
-    dy = -dy
-    console.log("coucou");
+    lord4.isCrashed = true;
+    score++;
   }
 }
 
@@ -244,11 +267,49 @@ function drawKnight() {
         ctx.closePath();
 }
 
+function drawKnightEnemy(enemy) {
+  ctx.beginPath();
+  ctx.rect(enemy.x, enemy.y, knightWidth, knightHeight);
+  ctx.fillStyle = "#1100FF";
+  ctx.fill();
+  ctx.closePath();
+}
+
 function drawScore() {
-  $(".score").html(score);
+  document.getElementById('score_player1').innerHTML = score;
+  document.getElementById('score_cpu').innerHTML = scoreEnemy;
+}
+
+var gameOver = {
+  x: 115,
+  y: 340,
+  // opacity: 0,
+  drawMe: function () {
+    // if (this.opacity < 1) {
+      // this.opacity += 0.01;
+    // }
+
+    //ctx.globalAlpha = this.opacity;
+    ctx.font = "110px kongtext";
+
+    ctx.fillStyle = "red";
+    ctx.fillText("Game Over", this.x, this.y);
+
+    
+    //ctx.globalAlpha = 1;
+  }
 }
 
 
+var startPlay = {
+  x: 100,
+  y: 340,
+  drawMe: function () {
+    ctx.font = "45px kongtext";
+    ctx.fillStyle = "red";
+    ctx.fillText("Press Spacebar to start", this.x, this.y);
+  }
+}
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -261,6 +322,10 @@ function draw() {
     lord3.draw();
     lord4.draw();
     drawKnight();
+    drawKnightEnemy(knightEn1);
+    drawKnightEnemy(knightEn2);
+    drawKnightEnemy(knightEn3);
+    
     drawBall();
     collisionDetectionLord();
     collisionDetection();
@@ -293,9 +358,26 @@ function draw() {
     x += dx;
     y += dy;
 
-    
+    drawScore();
+    if (lord1.isCrashed || lord2.isCrashed || lord3.isCrashed || lord4.isCrashed){
+      gameOver.drawMe();
+      alert("NEXT")
+      // document.location.reload();
+    }
+
+  
 }
 
 
+document.onkeydown = function (event) {
+  if (event.keyCode === 32) {
+    barPressed = true;
+  }
+}
+
+draw();
+startPlay.drawMe();
 
 setInterval(draw, 10);
+
+// drawScore(); ???????????????????????????????
