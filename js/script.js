@@ -14,7 +14,10 @@ var knightWidth = 40;
 var knightHeight = 30;
 var rightPressed = false;
 var leftPressed = false;
-
+var upPressed = false;
+var downPressed = false;
+var score = 0;
+var scoreEnemy = 0;
 
 var bricks = [];
 for(var c=0; c<brickColumnCount; c++) {
@@ -164,6 +167,39 @@ function drawBricks4() {
   }
 }
 
+function keyDownHandler(e) {
+  if(e.keyCode == 39) {
+      rightPressed = true;
+  }
+  else if(e.keyCode == 37) {
+      leftPressed = true;
+  }
+  else if(e.keyCode == 38) {
+      upPressed = true;
+  }
+  else if(e.keyCode == 40) {
+      downPressed = true;
+  }
+}
+
+
+function keyUpHandler(e) {
+  if(e.keyCode == 39) {
+      rightPressed = false;
+  }
+  else if(e.keyCode == 37) {
+      leftPressed = false;
+  }
+  else if(e.keyCode == 38) {
+      upPressed = false;
+  }
+  else if(e.keyCode == 40) {
+      downPressed = false;
+  }
+
+}
+
+
 function collisionDetection() {
 
   for(var c=0; c<brickColumnCount; c++) {
@@ -179,37 +215,39 @@ function collisionDetection() {
   }
 }
 
+
+function collisionDetectionLord() {
+  if (x > lord1.x && x < lord1.x+lord1.width && y > lord1.y && y < lord1.y+lord1.height) {
+    dy = -dy
+    console.log("coucou");
+  }
+  else if (x > lord2.x && x < lord2.x+lord2.width && y > lord2.y && y < lord2.y+lord2.height) {
+    dy = -dy
+    console.log("coucou");
+  }
+  else if (x > lord3.x && x < lord3.x+lord3.width && y > lord3.y && y < lord3.y+lord3.height) {
+    dy = -dy
+    console.log("coucou");
+  }
+  else if (x > lord4.x && x < lord4.x+lord4.width && y > lord4.y && y < lord4.y+lord4.height) {
+    dy = -dy
+    console.log("coucou");
+  }
+}
+
+
 function drawKnight() {
         ctx.beginPath();
         ctx.rect(knight.x, knight.y, knightWidth, knightHeight);
-        ctx.fillStyle = "#04F2BC";
+        ctx.fillStyle = "#59F204";
         ctx.fill();
         ctx.closePath();
 }
 
-function keyDownHandler(e) {
-  if(e.keyCode == 39) {
-      rightPressed = true;
-  }
-  else if(e.keyCode == 37) {
-      leftPressed = true;
-  }
-}
-function keyUpHandler(e) {
-  if(e.keyCode == 39) {
-      rightPressed = false;
-  }
-  else if(e.keyCode == 37) {
-      leftPressed = false;
-  }
+function drawScore() {
+  $(".score").html(score);
 }
 
-// function collisionLord(ball,lord) {
-  // return ball.y + ball.height >= lord.y
-      // && ball.y <= lord.y + lord.height
-      // && ball.x + ball.width >= lord.x
-      // && ball.x <= lord.x + lord.width
-// }
 
 
 function draw() {
@@ -224,8 +262,9 @@ function draw() {
     lord4.draw();
     drawKnight();
     drawBall();
-    // ball.drawBall();
+    collisionDetectionLord();
     collisionDetection();
+   
  
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
       dx = -dx;
@@ -233,12 +272,22 @@ function draw() {
     if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
       dy = -dy;
     }
+    
     if(rightPressed && knight.x < canvas.width/2-knightWidth-60) {
       knight.x += 7;
     }
     else if(leftPressed && knight.x > 0) {
       knight.x -= 7;
     }
+    else if(downPressed && knight.y < canvas.height-30) {
+      knight.y += 7;
+    }
+    else if(upPressed && knight.y > 400) {
+      knight.y -= 7;
+    }
+  
+
+    
 
 
     x += dx;
