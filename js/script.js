@@ -377,12 +377,21 @@ function draw() {
 
   if (grub) {
     
-    if (score===5 || scoreEnemy===5) {
+    if (score===2 || scoreEnemy===2) {
+      if (scoreEnemy===2){
       gameOver.drawMe();
       ctx.font = "30px kongtext";
       ctx.fillStyle = "red";
       ctx.fillText("Press F5 to Play Again", 300, 380);
+      
     }
+    else {
+      win();
+      ctx.font = "30px kongtext";
+      ctx.fillStyle = "red";
+      ctx.fillText("Press F5 to Play Again", 300, 380);
+    };
+  }
     else {
       continuePlay.drawMe();
       startScreen();
