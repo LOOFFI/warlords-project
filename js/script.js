@@ -1,11 +1,11 @@
 
 var canvas = document.querySelector(".warlords-canvas");
 var ctx = canvas.getContext("2d");
-var x = canvas.width-840;
-var y = canvas.height-160;
+var x = canvas.width-850;
+var y = canvas.height-230;
 var ballRadius = 5;
-var dx = 6;
-var dy = -5;
+var dx = 3;
+var dy = -4;
 var brickWidth = 70;
 var brickHeight = 30;
 var brickRowCount = 21;
@@ -20,6 +20,8 @@ var score = 0;
 var scoreEnemy = 0;
 var barPressed = false;
 var grub = false;
+var klm = false;
+var arr = [];
 
 var bricks = [];
 for(var c=0; c<brickColumnCount; c++) {
@@ -182,7 +184,7 @@ function keyDownHandler(e) {
       downPressed = true;
   }
   else if(e.keyCode == 32) {
-    setInterval(draw, 10);
+    draw();
   }
 }
 
@@ -201,7 +203,7 @@ function keyUpHandler(e) {
       downPressed = false;
   }
   else if(e.keyCode == 32) {
-    setInterval(draw, 10);
+    draw();
   }
 
 }
@@ -228,6 +230,7 @@ function collisionDetectionLord() {
   if (x > lord1.x && x < lord1.x+lord1.width && y > lord1.y && y < lord1.y+lord1.height) {
     lord1.isCrashed = true;
     score++;
+    arr.push(score);
   }
   else if (x > lord2.x && x < lord2.x+lord2.width && y > lord2.y && y < lord2.y+lord2.height) {
     lord2.isCrashed = true;
@@ -243,6 +246,20 @@ function collisionDetectionLord() {
   }
 }
 
+function collisionDetectionKnightEn() {
+  if (x > knightEn1.x && x < knightEn1.x+knightWidth && y > knightEn1.y && y < knightEn1.y+knightHeight) {
+    dy = -dy
+    }
+  else if (x > knightEn2.x && x < knightEn2.x+knightWidth && y > knightEn2.y && y < knightEn2.y+knightHeight) {
+    dy = -dy
+    }
+  else if (x > knightEn3.x && x < knightEn3.x+knightWidth && y > knightEn3.y && y < knightEn3.y+knightHeight) {
+    dy = -dy
+    }
+  else if (x > knight.x && x < knight.x+knightWidth && y > knight.y && y < knight.y+knightHeight) {
+    dy = -dy
+    }
+}
 
 function drawKnight() {
         ctx.beginPath();
@@ -286,23 +303,44 @@ var startPlay = {
   }
 }
 
+var continuePlay = {
+  x: 85,
+  y: 340,
+  drawMe: function () {
+    ctx.font = "40px kongtext";
+    ctx.fillStyle = "red";
+    ctx.fillText("Press Spacebar to continue", this.x, this.y);
+  }
+}
+
+
+var move = 5;
 
 function moveEnemies() {
-  
 
-  if (knightEn1.x !== 0){
-    knightEn1.x += 5
-  }
+  knightEn1.x += move;
+  knightEn2.x += move;
+  knightEn3.x += move;
 
-  //if (knightEn1.x === 10){
-  //  knightEn1.x = 400
-  //  // knightEn1.x += 5
-  //}
+  if (knightEn1.x === 550) {
+    move = -5;
+  } else if (knightEn1.x === 0) {move = 5};
+
+
+}
+
+function win() {
+  ctx.font = "60px kongtext";
+  ctx.fillStyle = "red";
+  ctx.fillText("YOU ARE THE WINNER!", 20, 340);
 }
 
 
 function draw() {
     if (grub) {
+
+      continuePlay.drawMe();
+      //win();    
     return
     }  
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -322,6 +360,7 @@ function draw() {
     drawBall();
     collisionDetectionLord();
     collisionDetection();
+    collisionDetectionKnightEn();
    
  
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
@@ -345,30 +384,30 @@ function draw() {
     }
     
 
-    // if(knightEn1.x === 300) {
-    //   knightEn1.x -= 5;
-    // }
-
-    
-  
-
-    //x += dx;
-    //y += dy;
+    x += dx;
+    y += dy;
 
     drawScore();
     if (lord1.isCrashed || lord2.isCrashed || lord3.isCrashed || lord4.isCrashed){
       grub = true;
-      
-      //gameOver.drawMe();
-      // alert("NEXT")
-      
-      // document.location.reload();
-    }
-
+      }
+    
+    requestAnimationFrame(draw);
   
 }
 
-
-
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+drawBricks();
+drawBricks2();
+drawBricks3();
+drawBricks4();
+lord1.draw();
+lord2.draw();
+lord3.draw();
+lord4.draw();
+drawKnight();
+drawKnightEnemy(knightEn1);
+drawKnightEnemy(knightEn2);
+drawKnightEnemy(knightEn3)
 startPlay.drawMe();
 
