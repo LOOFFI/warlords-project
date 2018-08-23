@@ -354,6 +354,7 @@ function win() {
   ctx.font = "60px kongtext";
   ctx.fillStyle = "red";
   ctx.fillText("YOU ARE THE WINNER!", 20, 340);
+  
 }
 
 
@@ -375,13 +376,18 @@ function draw() {
   lord4.draw();
 
   if (grub) {
-    continuePlay.drawMe();
-    startScreen();
-    // continuePlay.drawMe();
-    // ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // draw();
+    
+    if (score===5 || scoreEnemy===5) {
+      gameOver.drawMe();
+      ctx.font = "30px kongtext";
+      ctx.fillStyle = "red";
+      ctx.fillText("Press F5 to Play Again", 300, 380);
+    }
+    else {
+      continuePlay.drawMe();
+      startScreen();
+    }
     return
-    // window.location.href="index.html"
   }
 
     moveEnemies();
@@ -426,18 +432,10 @@ function draw() {
 
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 startScreen();
-// drawBricks();
-// drawBricks2();
-// drawBricks3();
-// drawBricks4();
-// lord1.draw();
-// lord2.draw();
-// lord3.draw();
-// lord4.draw();
-// drawKnight();
-// drawKnightEnemy(knightEn1);
-// drawKnightEnemy(knightEn2);
-// drawKnightEnemy(knightEn3)
+drawBricks();
+drawBricks2();
+drawBricks3();
+drawBricks4();
 startPlay.drawMe();
 
 
