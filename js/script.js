@@ -377,14 +377,14 @@ function draw() {
 
   if (grub) {
     
-    if (score===2 || scoreEnemy===2) {
-      if (scoreEnemy===2){
+    if (score===5 || scoreEnemy===5) {
+      if (scoreEnemy===5){
       gameOver.drawMe();
       ctx.font = "30px kongtext";
       ctx.fillStyle = "red";
       ctx.fillText("Press F5 to Play Again", 300, 380);
-      
     }
+    
     else {
       win();
       ctx.font = "30px kongtext";
