@@ -51,6 +51,7 @@ lord.prototype.draw = function () {
   }
   
   ctx.fillRect(this.x, this.y, this.width, this.height);
+  
 };
 
 var lord1 = new lord(0,0,140,90);
@@ -307,7 +308,7 @@ var gameOver = {
   x: 115,
   y: 340,
   drawMe: function () {
-    ctx.font = "110px kongtext";
+    ctx.font = "110px 'Press Start 2P', cursive";
     ctx.fillStyle = "red";
     ctx.fillText("Game Over", this.x, this.y);
   }
@@ -315,20 +316,20 @@ var gameOver = {
 
 
 var startPlay = {
-  x: 100,
+  x: 95,
   y: 340,
   drawMe: function () {
-    ctx.font = "45px kongtext";
+    ctx.font = "45px 'Press Start 2P', cursive";
     ctx.fillStyle = "red";
     ctx.fillText("Press Spacebar to start", this.x, this.y);
   }
 }
 
 var continuePlay = {
-  x: 85,
+  x: 75,
   y: 340,
   drawMe: function () {
-    ctx.font = "40px kongtext";
+    ctx.font = "40px 'Press Start 2P', cursive";
     ctx.fillStyle = "red";
     ctx.fillText("Press Spacebar to continue", this.x, this.y);
   }
@@ -351,7 +352,7 @@ function moveEnemies() {
 }
 
 function win() {
-  ctx.font = "60px kongtext";
+  ctx.font = "60px 'Press Start 2P', cursive";
   ctx.fillStyle = "red";
   ctx.fillText("YOU ARE THE WINNER!", 20, 340);
   
@@ -374,7 +375,7 @@ function draw() {
   lord2.draw();
   lord3.draw();
   lord4.draw();
-
+  
   if (grub) {
     
     if (score===5 || scoreEnemy===5) {
