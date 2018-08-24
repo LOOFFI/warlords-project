@@ -1,4 +1,3 @@
-
 var canvas = document.querySelector(".warlords-canvas");
 var ctx = canvas.getContext("2d");
 var x;
@@ -381,14 +380,14 @@ function draw() {
     if (score===5 || scoreEnemy===5) {
       if (scoreEnemy===5){
       gameOver.drawMe();
-      ctx.font = "30px kongtext";
+      ctx.font = "30px 'Press Start 2P', cursive";
       ctx.fillStyle = "red";
       ctx.fillText("Press F5 to Play Again", 300, 380);
     }
     
     else {
       win();
-      ctx.font = "30px kongtext";
+      ctx.font = "30px 'Press Start 2P', cursive";
       ctx.fillStyle = "red";
       ctx.fillText("Press F5 to Play Again", 300, 380);
     };
@@ -446,6 +445,4 @@ drawBricks();
 drawBricks2();
 drawBricks3();
 drawBricks4();
-startPlay.drawMe();
-
-
+startPlay.drawMe()
